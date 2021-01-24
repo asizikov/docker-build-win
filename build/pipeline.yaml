@@ -5,15 +5,16 @@ pool:
  vmImage: windows-latest
 
 steps:
-    - task: Bash@3
+    - task: PowerShell@2
       inputs:
         targetType: 'inline'
         script: |
-          docker build -t my-build-tools -f $(System.DefaultWorkingDirectory)\build\Dockerfile.build $(System.DefaultWorkingDirectory)/build
-          docker create -it --name build-tools -v $(System.DefaultWorkingDirectory):c:/code my-build-tools
+          docker build -t my-build-tools -f $env:System_DefaultWorkingDirectory\build\Dockerfile.build $env:System_DefaultWorkingDirectory\build
+          docker create -it --name build-tools -v $env:System_DefaultWorkingDirectory:c:/code my-build-tools
           docker start build-tools
           docker exec build-tools msbuild C:\code\MySite.sln /p:OutputPath=c:\code\output
           docker stop build-tools
+    
     - task: ArchiveFiles@2
       inputs:
         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/output'
