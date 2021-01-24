@@ -10,7 +10,7 @@ steps:
         targetType: 'inline'
         script: |
           $volume_spec=$env:System_DefaultWorkingDirectory + ':C:\code'
-
+          docker build -t my-build-tools -f $env:System_DefaultWorkingDirectory\build\Dockerfile.build $env:System_DefaultWorkingDirectory\build
           docker create -it --name build-tools -v $volume_spec mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-ltsc2019
           docker start build-tools
           docker exec build-tools msbuild C:\code\MySite.sln /p:OutputPath=C:\code\output
