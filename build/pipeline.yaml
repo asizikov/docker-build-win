@@ -13,6 +13,7 @@ steps:
           docker build -t my-build-tools -f $env:System_DefaultWorkingDirectory\build\Dockerfile.build $env:System_DefaultWorkingDirectory\build
           docker create -it --name build-tools -v $volume_spec my-build-tools
           docker start build-tools
+          docker exec build-tools nuget restore C:\code
           docker exec build-tools msbuild C:\code\MySite.sln /p:OutputPath=C:\code\output
           docker stop build-tools
     
