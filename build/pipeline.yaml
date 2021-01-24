@@ -1,0 +1,14 @@
+trigger: 
+- main
+
+pool:
+  name: WindowsContainers
+  demands: windowscontainer -equals true
+
+steps:
+    - task: Docker@2
+      inputs:
+        command: 'build'
+        Dockerfile: 'build/Dockerfile.build'
+        buildContext: 'build'
+        tags: 'my-build-tools'
