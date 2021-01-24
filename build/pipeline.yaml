@@ -2,8 +2,7 @@ trigger:
 - main
 
 pool:
-  name: WindowsContainers
-  demands: windowscontainer -equals true
+ vmImage: windows-latest
 
 steps:
     - task: Docker@2
