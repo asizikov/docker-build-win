@@ -9,7 +9,7 @@ steps:
       inputs:
         targetType: 'inline'
         script: |
-          docker build -t my-build-tools -f $(System.DefaultWorkingDirectory)\build\Dockerfile.build build
+          docker build -t my-build-tools -f $(System.DefaultWorkingDirectory)\build\Dockerfile.build $(System.DefaultWorkingDirectory)\build
           docker create -it --name build-tools -v $(System.DefaultWorkingDirectory):c:/code my-build-tools
           docker start build-tools
           docker exec build-tools msbuild C:\code\MySite.sln /p:OutputPath=c:\code\output
